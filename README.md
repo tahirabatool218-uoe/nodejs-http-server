@@ -6,7 +6,7 @@ The project includes HTTP routing, request handling, asynchronous file operation
 
 ## Project Links
 
-* **Live Demo:** nodejs-http-server-production.up.railway.app
+* **Live Demo:** https://nodejs-http-server-production.up.railway.app/
 * **GitHub Repository:** https://github.com/tahirabatool218-uoe/nodejs-http-server
 
 ## Overview
