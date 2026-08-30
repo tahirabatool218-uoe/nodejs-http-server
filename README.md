@@ -6,8 +6,8 @@ The project includes HTTP routing, request handling, asynchronous file operation
 
 ## Project Links
 
-* **Live Demo:** Coming Soon
-* **GitHub Repository:** Coming Soon
+* **Live Demo:** https://nodejs-http-server-one.vercel.app
+* **GitHub Repository:** https://github.com/tahirabatool218-uoe/nodejs-http-server
 
 ## Overview
 
@@ -267,7 +267,7 @@ npm --version
 ### Clone the Repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/tahirabatool218-uoe/nodejs-http-server.git
 ```
 
 Move into the project directory:
