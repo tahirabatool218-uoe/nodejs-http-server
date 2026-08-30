@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>File Manager | Node.js Server</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 24px 8%;
+        }
+
+        main {
+            width: 84%;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .file-content {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 120px;
+            white-space: pre-wrap;
+            margin-bottom: 15px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            resize: vertical;
+            font-family: Arial, sans-serif;
+            margin-bottom: 15px;
+        }
+
+        button,
+        .btn {
+            border: none;
+            text-decoration: none;
+            background: #2563eb;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        button:hover,
+        .btn:hover {
+            background: #1d4ed8;
+        }
+
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>File Manager</h1>
+</header>
+
+<main>
+
+    <div class="card">
+
+        <h2>message.txt</h2>
+
+        <p class="description">
+            Read the current content of the server-side file.
+        </p>
+
+        <div id="fileContent" class="file-content">
+            Click "Read File" to load the current content.
+        </div>
+
+        <button onclick="readFile()">
+            Read File
+        </button>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Write to File</h2>
+
+        <p class="description">
+            Enter new content and save it to message.txt.
+        </p>
+
+        <textarea
+            id="newContent"
+            placeholder="Enter your message here..."
+        ></textarea>
+
+        <button onclick="writeFile()">
+            Write to File
+        </button>
+
+        <div id="message" class="message"></div>
+
+    </div>
+
+    <a class="btn back" href="/">
+        Back to Dashboard
+    </a>
+
+</main>
+
+<script>
+    async function readFile() {
+        const fileContent = document.getElementById("fileContent");
+
+        try {
+            const response = await fetch("/api/file");
+            const result = await response.json();
+
+            if (result.success) {
+                fileContent.textContent = result.content;
+            } else {
+                fileContent.textContent = result.message;
+            }
+        } catch (error) {
+            fileContent.textContent = "Unable to connect to server.";
+        }
+    }
+
+    async function writeFile() {
+        const content = document.getElementById("newContent").value;
+        const message = document.getElementById("message");
+
+        if (!content.trim()) {
+            message.textContent = "Please enter some content.";
+            return;
+        }
+
+        try {
+            const response = await fetch("/api/file", {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    content: content
+                })
+            });
+
+            const result = await response.json();
+
+            message.textContent = result.message;
+
+            if (result.success) {
+                document.getElementById("newContent").value = "";
+                readFile();
+            }
+
+        } catch (error) {
+            message.textContent = "Unable to connect to server.";
+        }
+    }
+</script>
+
+</body>
+</html>

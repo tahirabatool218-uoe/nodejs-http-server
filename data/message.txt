@@ -1,0 +1,5 @@
+Node.js Fundamentals Project
+
+This file is used to demonstrate asynchronous file reading and writing with the Node.js fs module.
+
+The content can be updated through the File Manager interface.
